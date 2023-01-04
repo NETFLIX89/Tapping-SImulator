@@ -1,0 +1,355 @@
+getgenv().autoTap = false
+getgenv().buyegg = false
+getgenv().walkSpeed = false
+getgenv().autoRebirth = false
+getgenv().SelectedRebirth = false
+getgenv().autoRebirthUpgrade = false
+getgenv().autoJumpUpgrade = false
+getgenv().autoClaim = false
+getgenv().autoGemUpgrade = false
+getgenv().SecureMode = true
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+
+local Window = Rayfield:CreateWindow({
+	Name = "Tapping Simulator! by NETFLIX",
+	LoadingTitle = "Tapping Simulator!",
+	LoadingSubtitle = "Tapping Simulator! by NETFLIX",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = Farming, -- Create a custom folder for your hub/game
+		FileName = ""
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	
+})
+local Tab = Window:CreateTab("Main", 4483362458)
+local Section = Tab:CreateSection("Farming")
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Click",
+	CurrentValue = false,
+	Flag = "Auto Click", 
+	Callback = function(Value)
+		getgenv().autoTap = Value
+        if Value then
+        doTap()
+	end
+end
+})
+
+function doTap()
+    spawn(function()
+        while getgenv().autoTap == true do
+            local args = {
+                [1] = "Main"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Tap:FireServer(unpack(args))
+            wait()
+        end 
+    end)
+end
+
+local Section = Tab:CreateSection("Rebirths")
+local Dropdown = Tab:CreateDropdown({
+    Name = "Select Rebirth",
+    Options = {"1", "5", "10", "20", "100", "500", "2000", "13500", "32000", "62500", "108000", "171500", "256000", "364500", "500000", "1000000",},
+    CurrentOption = " ",
+    Flag = "Rebirth", 
+    Callback = function(Option)
+        getgenv().SelectedRebirth = Option; 
+    end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Rebirth",
+	CurrentValue = false,
+	Flag = "Auto Rebirth", 
+	Callback = function(Value)
+		getgenv().autoRebirth = Value
+        if Value then
+            autoRebirth()
+	end
+end
+})
+
+function autoRebirth()
+    spawn(function()
+        while getgenv().autoRebirth == true do
+            local args = {
+                [1] = SelectedRebirth
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Rebirth:FireServer(unpack(args))
+            wait()
+        end 
+    end)
+end
+
+local Tab = Window:CreateTab("Eggs", 4483362458)
+local Section = Tab:CreateSection("Egg")
+
+local eggtable = {}
+
+for i,v in ipairs(game:GetService("Workspace").Shops:GetChildren()) do
+	if not v.Name:match("Robux") then
+		table.insert(eggtable,v.Name)
+	end
+end
+
+
+local eggtoopen = "iagree"
+Tab:CreateDropdown({
+    Name = "Egg to Open",
+    Options = eggtable,
+    CurrentOption = "",
+    Flag = "Egg to open",
+    Callback = function(Option)
+        eggtoopen = Option
+    end,
+})
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Egg Open 1",
+	CurrentValue = false,
+	Flag = "Auto Egg", 
+	Callback = function(Value)
+        getgenv().buyegg = Value
+        if Value then
+            buyegg(eggtoopen)
+        end
+	end
+})
+
+function buyegg(v)
+    spawn(function()
+        while wait() and getgenv().buyegg do 
+            local args = {
+                [1] = {},
+                [2] = v,
+                [3] = 1
+            }
+            
+            game:GetService("ReplicatedStorage").Events.HatchEgg:InvokeServer(unpack(args))      
+            wait()    
+        end
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Egg Open 3 (Need Gamepass)",
+	CurrentValue = false,
+	Flag = "Auto Egg", 
+	Callback = function(Value)
+        getgenv().buyegg = Value
+        if Value then
+            buyegg(eggtoopen)
+        end
+	end
+})
+
+function buyegg(v)
+    spawn(function()
+        while wait() and getgenv().buyegg do 
+            local args = {
+                [1] = {},
+                [2] = v,
+                [3] = 3
+            }
+            
+            game:GetService("ReplicatedStorage").Events.HatchEgg:InvokeServer(unpack(args))      
+            wait()    
+        end
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Buy Egg Open 4 (Need Gamepass)",
+	CurrentValue = false,
+	Flag = "Auto Egg", 
+	Callback = function(Value)
+        getgenv().buyegg = Value
+        if Value then
+            buyegg(eggtoopen)
+        end
+	end
+})
+
+function buyegg(v)
+    spawn(function()
+        while wait() and getgenv().buyegg do 
+            local args = {
+                [1] = {},
+                [2] = v,
+                [3] = 4
+            }
+            
+            game:GetService("ReplicatedStorage").Events.HatchEgg:InvokeServer(unpack(args))      
+            wait()    
+        end
+    end)
+end
+
+
+local Tab = Window:CreateTab("Auto Stuff", 4483362458)
+local Section = Tab:CreateSection("Auto Stuff")
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Upgrade Rebirths",
+	CurrentValue = false,
+	Flag = "Auto upgrade", 
+	Callback = function(Value)
+		getgenv().autoRebirthUpgrade = Value
+        if Value then
+        autoRebirthUpgrade()
+	end
+end
+})
+
+function autoRebirthUpgrade()
+    spawn(function()
+        while getgenv().autoRebirthUpgrade == true do
+            local args = {
+                [1] = "rebirthUpgrades"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Upgrade:FireServer(unpack(args))
+            wait(1)
+        end 
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Upgrade Jumps",
+	CurrentValue = false,
+	Flag = "Auto Upgrade", 
+	Callback = function(Value)
+		getgenv().autoJumpUpgrade = Value
+        if Value then
+        autoJumpUpgrade()
+	end
+end
+})
+
+function autoJumpUpgrade()
+    spawn(function()
+        while getgenv().autoJumpUpgrade == true do 
+            local args = {
+                [1] = "jumps"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Upgrade:FireServer(unpack(args))
+            wait(1)
+        end 
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Upgrade Gems",
+	CurrentValue = false,
+	Flag = "Auto Upgrade", 
+	Callback = function(Value)
+		getgenv().autoGemUpgrade = Value
+        if Value then
+        autoGemUpgrade()
+	end
+end
+})
+
+function autoGemUpgrade()
+    spawn(function()
+        while getgenv().autoGemUpgrade == true do 
+            local args = {
+                [1] = "gemMultiplierUpgrade"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Upgrade:FireServer(unpack(args))
+            wait(1)
+        end 
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Upgrade Storage",
+	CurrentValue = false,
+	Flag = "Auto Upgrade", 
+	Callback = function(Value)
+		getgenv().storageUpgrade = Value
+        if Value then
+            storageUpgrade()
+	end
+end
+})
+
+function storageUpgrade()
+    spawn(function()
+        while getgenv().autostorageUpgrade == true do 
+            local args = {
+                [1] = "storageUpgrade"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.Upgrade:FireServer(unpack(args))
+            wait(1)
+        end 
+    end)
+end
+
+local Toggle = Tab:CreateToggle({
+	Name = "Auto Claim Random Reward",
+	CurrentValue = false,
+	Flag = "Auto Upgrade", 
+	Callback = function(Value)
+		getgenv().autoClaim = Value
+        if Value then
+        autoClaim()
+	end
+end
+})
+
+function autoClaim()
+    spawn(function()
+        while getgenv().autoClaim == true do 
+            game:GetService("ReplicatedStorage").Events.ClaimRandomReward:FireServer()
+            wait(1)
+        end 
+    end)
+end
+
+
+
+
+
+local Tab = Window:CreateTab("Misc", 4483362458)
+local Section = Tab:CreateSection("Misc")
+local Toggle = Tab:CreateToggle({
+    Name = "Toggle WalkSpeed",
+    CurrentValue = false,
+    Flag = "Toggle1", 
+    Callback = function(Value)
+        getgenv().ChangeWalkSpeed = Value
+    end,
+})
+
+local Slider = Tab:CreateSlider({
+    Name = "Change WalkSpeed",
+    Range = {50, 500},
+    Increment = 10,
+    Suffix = "Speed",
+    CurrentValue = 10,
+    Flag = "Slider1", 
+    Callback = function(Value)
+        getgenv().walkSpeed = Value
+    end,
+})
+
+task.spawn(function()
+    while wait() do 
+        if getgenv().walkSpeed ~= nil and getgenv().ChangeWalkSpeed then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().walkSpeed
+        end
+    end
+end)
+    
